@@ -44,7 +44,6 @@ func newRootCmd() *cobra.Command {
 		promptFileFlag  string
 		clipFlag        bool
 		pasteFlag       bool
-		editorFlag      bool
 		interactiveFlag bool
 	)
 
@@ -63,7 +62,6 @@ func newRootCmd() *cobra.Command {
 				PromptFile:  promptFileFlag,
 				Clip:        clipFlag,
 				Paste:       pasteFlag,
-				Editor:      editorFlag,
 				Interactive: interactiveFlag,
 			})
 		},
@@ -74,7 +72,6 @@ func newRootCmd() *cobra.Command {
 	root.Flags().StringVar(&promptFileFlag, "prompt-file", "", "ad-hoc prompt file path")
 	root.Flags().BoolVar(&clipFlag, "clip", false, "read input from clipboard")
 	root.Flags().BoolVar(&pasteFlag, "paste", false, "write translation to clipboard")
-	root.Flags().BoolVarP(&editorFlag, "editor", "e", false, "compose input in $EDITOR (vim/nano)")
 	root.Flags().BoolVarP(&interactiveFlag, "interactive", "i", false, "read multi-line stdin until Ctrl-D")
 
 	root.AddCommand(newInitCmd())
@@ -100,7 +97,6 @@ type runOpts struct {
 	PromptFile  string
 	Clip        bool
 	Paste       bool
-	Editor      bool
 	Interactive bool
 }
 
@@ -126,7 +122,6 @@ func runTranslate(ctx context.Context, args []string, opts runOpts) error {
 	text, err := input.Resolve(input.Source{
 		Args:           args,
 		UseClip:        opts.Clip,
-		UseEditor:      opts.Editor,
 		UseInteractive: opts.Interactive,
 	})
 	if err != nil {
