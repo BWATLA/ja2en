@@ -23,10 +23,13 @@ make install        # $GOPATH/bin/ja2en に配置
 
 1. Google AI Studio で API key を発行: <https://aistudio.google.com/apikey>
 2. シェル設定に追記:
+
    ```bash
    export GEMINI_API_KEY="..."
    ```
+
 3. 設定ファイル生成:
+
    ```bash
    ja2en init
    ```
