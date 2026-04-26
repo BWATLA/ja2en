@@ -1,7 +1,7 @@
 .PHONY: build install test clean fmt vet lint check
 
 BINARY := ja2en
-VERSION := 0.1.0
+VERSION := 0.5.0
 LDFLAGS := -ldflags "-X main.version=$(VERSION) -s -w"
 
 build:
