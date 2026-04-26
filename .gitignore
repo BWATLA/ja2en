@@ -19,3 +19,6 @@ ja2en
 /bin/
 /build/
 coverage.out
+
+# Local planning / scratch
+plans/
