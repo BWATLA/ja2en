@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"runtime/debug"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -27,7 +28,23 @@ type translatorClient interface {
 }
 
 // version is overridden at build time via -ldflags "-X main.version=..."
+// (set by the Makefile). When installed via `go install <module>@<tag>` the
+// Makefile is bypassed, so init() falls back to runtime/debug.BuildInfo
+// which carries the module tag (e.g. "v0.5.0").
 var version = "dev"
+
+func init() {
+	if version != "dev" {
+		return
+	}
+	info, ok := debug.ReadBuildInfo()
+	if !ok {
+		return
+	}
+	if v := info.Main.Version; v != "" && v != "(devel)" {
+		version = v
+	}
+}
 
 func main() {
 	rootCmd := newRootCmd()
